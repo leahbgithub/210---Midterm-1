@@ -99,28 +99,32 @@ public:
             else
                 temp = temp->next; // move to next node
         }
+        // if temp is nullptr, it wont work
         if (!temp) {
             cout << "Position doesn't exist." << endl;
             return;
         }
         if (!temp->next) {
-            pop_back();
+            pop_back(); // this will use pop_back if last node is deleted
             return;
         }
-        Node* tempPrev = temp->prev;
-        tempPrev->next = temp->next;
-        temp->next->prev = tempPrev;
+        // removes "temp" from the list by fixing pointers
+        Node* tempPrev = temp->prev; // points to previous node
+        tempPrev->next = temp->next; // Links previous node to next node
+        temp->next->prev = tempPrev; // Links the next node to the node before that
         delete temp; // This will delete the node at the position
     }
 
     void push_back(int v) {
-        Node* newNode = new Node(v);
+        Node* newNode = new Node(v); // Creates new node
+        
+        // if list is empty, new node is head and tail
         if (!tail)
             head = tail = newNode;
         else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
+            tail->next = newNode; // links current tail to new node
+            newNode->prev = tail; // new node will point to the current tail
+            tail = newNode; // updates tail pointer back to the new node
         }
     }
 
@@ -170,10 +174,10 @@ public:
 
     // Destructor -- This will delete all nodes in the list
     ~DoublyLinkedList() {
-        while (head) {
+        while (head) { // delete each node over the list
             Node* temp = head;
-            head = head->next;
-            delete temp; // deletes the node one at a time
+            head = head->next; // Moves to next node
+            delete temp; // deletes the current node
         }
     }
 
@@ -193,7 +197,7 @@ public:
 
     // Method -- Same as print() however will be from front to end
     void print_reverse() {
-        Node* current = tail;
+        Node* current = tail; // Starts at tail
         if (!current) {
             cout << "List is empty." << endl;
             return;
@@ -205,21 +209,39 @@ public:
         cout << endl;
     }
     
+    // Prints every other element in list, beginning with the first element
     void every_other_element() {
+        Node* current = head; // Starts at beginning of list
+        int counter = 1; // Position tracker
         
         while(current != nullptr) {
+            // prints node data if it is in an even position
             if (counter % 2 == 1) {
                 cout << current-> data << " ";
             }
-            current = current->next;
+            current = current->next; // moves to next node
             counter++;
         }
-        cout << endl;
+        cout << endl; // this will end line after elements are printed
     }
 };
 
+// driver/main which will show DoublyLinkedList class
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS; // dummy statement to avoid compiler warning
+    DoublyLinkedList list; // Creates object of DoublyLinkedList
+    
+    cout << "Every other element in the empty list: ";
+    list.every_other_element();
+    
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    list.push_back(5);
+    
+    cout << "Every other element in list: ";
+    list.every_other_element();
+    
     return 0;
 }
 
