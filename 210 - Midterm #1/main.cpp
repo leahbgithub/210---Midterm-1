@@ -9,26 +9,32 @@ const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 class DoublyLinkedList {
 private:
     struct Node {
-        int data;
-        Node* prev;
-        Node* next;
+        int data; // date contained by the node
+        Node* prev; // pointer to the node before
+        Node* next; // pointer to next node
+        
+        // Constructor --- Intializes new node with a value as well could possibly set the prev and next pointers from above
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
             data = val;
             prev = p;
             next = n;
         }
     };
-    Node* head;
-    Node* tail;
+    Node* head; // Pointer --- Points to first node within the list
+    Node* tail; // Pointer ---- Points to the last node within the list
 public:
+    // Constructor --- Initializes an empty list
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
+    // Will Check if a position is valid
     void insert_after(int value, int position) {
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
             return;
         }
+        // This will create new node with a specific given value
         Node* newNode = new Node(value);
+        // This occurs if the list is empty, and will make the new node both the head as well as the tail
         if (!head) {
             head = tail = newNode;
             return;
