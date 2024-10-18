@@ -6,9 +6,10 @@ using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
+// DoublyLinkedList Class
 class DoublyLinkedList {
 private:
-    struct Node {
+    struct Node { // Node structure for each of the elements in the doubly linked list
         int data; // date contained by the node
         Node* prev; // pointer to the node before
         Node* next; // pointer to next node
@@ -134,21 +135,21 @@ public:
         if (!head) // if list empty, make new node the head and the tail
             head = tail = newNode;
         else {
-            newNode->next = head;
-            head->prev = newNode;
+            newNode->next = head; // New node will point to current head
+            head->prev = newNode; // The current head will point to the new node
             head = newNode; // This will update the tail pointer
         }
     }
     
     // Method --- Adds new node with value "v" to front of the list
     void pop_front() {
-        if (!head) {
+        if (!head) { // if list empty, dont do anything
             cout << "List is empty." << endl;
             return;
         }
-        Node* temp = head;
+        Node* temp = head; // stores current head
         if (head->next) {
-            head = head->next;
+            head = head->next; // moves head pointer to next node
             head->prev = nullptr; // updates head's prev pointer to a nullptr
         }
         else
@@ -164,7 +165,7 @@ public:
         }
         Node* temp = tail;
         if (tail->prev) {
-            tail = tail->prev;
+            tail = tail->prev; // moves tail pointer to node before that
             tail->next = nullptr; // tail's pointer is updated to nullptr
         }
         else
@@ -181,9 +182,9 @@ public:
         }
     }
 
-    // Method --- prints list from end to front
+    // Method --- prints list from the head to the tail
     void print() {
-        Node* current = head;
+        Node* current = head; // starts at head
         if (!current) {
             cout << "List is empty." << endl;
             return;
@@ -195,7 +196,7 @@ public:
         cout << endl;
     }
 
-    // Method -- Same as print() however will be from front to end
+    // Method -- Same as print() however will be from tail to head so reverse order
     void print_reverse() {
         Node* current = tail; // Starts at tail
         if (!current) {
@@ -212,11 +213,11 @@ public:
     // Prints every other element in list, beginning with the first element
     void every_other_element() {
         Node* current = head; // Starts at beginning of list
-        int counter = 1; // Position tracker
+        int counter = 0; // Position tracker
         
-        while(current != nullptr) {
+        while(current) {
             // prints node data if it is in an even position
-            if (counter % 2 == 1) {
+            if (counter % 2 == 0) {
                 cout << current-> data << " ";
             }
             current = current->next; // moves to next node
@@ -230,18 +231,20 @@ public:
 int main() {
     DoublyLinkedList list; // Creates object of DoublyLinkedList
     
-    cout << "Every other element in the empty list: ";
-    list.every_other_element();
-    
-    list.push_back(1);
+    // Will create nodes in list to try the program
+    list.push_back(1); // For example, adds 1 to the end of the list
     list.push_back(2);
     list.push_back(3);
     list.push_back(4);
     list.push_back(5);
     
-    cout << "Every other element in list: ";
-    list.every_other_element();
+    cout << "Original List: ";
+    list.print(); // will print the original list
     
-    return 0;
+    // this will test using the every_other_element method
+    cout << "Every other element in list: ";
+    list.every_other_element(); // prints every other element beginning at the first element
+    
+    return 0; // terminates
 }
 
