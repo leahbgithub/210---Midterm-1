@@ -15,9 +15,9 @@ private:
         
         // Constructor --- Intializes new node with a value as well could possibly set the prev and next pointers from above
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
-            data = val;
-            prev = p;
-            next = n;
+            data = val; // Set data of node to value passed in the constructor
+            prev = p; // set "prev" pointer to point to previous node or later on nullptr
+            next = n; // set "next" pointer to point to next node or later on nullptr
         }
     };
     Node* head; // Pointer --- Points to first node within the list
@@ -57,6 +57,7 @@ public:
             temp->next->prev = newNode;
         else
             tail = newNode; // This updates the tail if the new node ends up being the last node
+        // Links "temp" to new node
         temp->next = newNode;
     }
 
@@ -89,14 +90,14 @@ public:
             pop_front(); // if last position is deleted, use pop_back() function
             return;
         }
-        Node* temp = head;
+        Node* temp = head; // Start at head of list
         for (int i = 1; i < pos; i++) {
-            if (!temp) {
+            if (!temp) { // Only if end of list is reached, then another position wouldnt work
                 cout << "Position doesn't exist." << endl;
                 return;
             }
             else
-                temp = temp->next;
+                temp = temp->next; // move to next node
         }
         if (!temp) {
             cout << "Position doesn't exist." << endl;
@@ -126,7 +127,7 @@ public:
     //Method --- Adds new node with value of "v" to back of list
     void push_front(int v) {
         Node* newNode = new Node(v);
-        if (!head) // node will turn into head and tail if list isnt full
+        if (!head) // if list empty, make new node the head and the tail
             head = tail = newNode;
         else {
             newNode->next = head;
@@ -176,6 +177,7 @@ public:
         }
     }
 
+    // Method --- prints list from end to front
     void print() {
         Node* current = head;
         if (!current) {
@@ -183,12 +185,13 @@ public:
             return;
         }
         while (current) {
-            cout << current->data << " ";
-            current = current->next;
+            cout << current->data << " "; // will print the information stored for each individual node
+            current = current->next; // proceeds to next node
         }
         cout << endl;
     }
 
+    // Method -- Same as print() however will be from front to end
     void print_reverse() {
         Node* current = tail;
         if (!current) {
@@ -196,8 +199,20 @@ public:
             return;
         }
         while (current) {
-            cout << current->data << " ";
-            current = current->prev;
+            cout << current->data << " "; // Print information stored for each node
+            current = current->prev; // Will move to the next node
+        }
+        cout << endl;
+    }
+    
+    void every_other_element() {
+        
+        while(current != nullptr) {
+            if (counter % 2 == 1) {
+                cout << current-> data << " ";
+            }
+            current = current->next;
+            counter++;
         }
         cout << endl;
     }
