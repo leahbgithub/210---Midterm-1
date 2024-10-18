@@ -60,7 +60,7 @@ public:
         temp->next = newNode;
     }
 
-    // Method -- Which will delete last presence of "value" from within the list
+    // Method -- Which will delete first presence of "value" from within the list
     void delete_val(int value) {
         if (!head) return; // do not do anything if list ends up being empty
         Node* temp = head;
@@ -71,7 +71,7 @@ public:
         if (temp->prev)
             temp->prev->next = temp->next;
         else
-            head = temp->next; // Update head if last node ends up being deleted
+            head = temp->next; // Update head if first node ends up being deleted
         if (temp->next)
             temp->next->prev = temp->prev;
         else
@@ -82,11 +82,11 @@ public:
     // Method -- Delete node at position "pos"
     void delete_pos(int pos) {
         if (!head) {
-            cout << "List is empty." << endl;
+            cout << "List is empty." << endl; // prints list is empty
             return;
         }
         if (pos == 1) {
-            pop_front(); // if last position is deleted, use po
+            pop_front(); // if last position is deleted, use pop_back() function
             return;
         }
         Node* temp = head;
@@ -109,7 +109,7 @@ public:
         Node* tempPrev = temp->prev;
         tempPrev->next = temp->next;
         temp->next->prev = tempPrev;
-        delete temp;
+        delete temp; // This will delete the node at the position
     }
 
     void push_back(int v) {
@@ -123,17 +123,19 @@ public:
         }
     }
 
+    //Method --- Adds new node with value of "v" to back of list
     void push_front(int v) {
         Node* newNode = new Node(v);
-        if (!head)
+        if (!head) // node will turn into head and tail if list isnt full
             head = tail = newNode;
         else {
             newNode->next = head;
             head->prev = newNode;
-            head = newNode;
+            head = newNode; // This will update the tail pointer
         }
     }
-
+    
+    // Method --- Adds new node with value "v" to front of the list
     void pop_front() {
         if (!head) {
             cout << "List is empty." << endl;
@@ -142,13 +144,14 @@ public:
         Node* temp = head;
         if (head->next) {
             head = head->next;
-            head->prev = nullptr;
+            head->prev = nullptr; // updates head's prev pointer to a nullptr
         }
         else
-            head = tail = nullptr;
-        delete temp;
+            head = tail = nullptr; // only if list is empty
+        delete temp; // deletes old head node
     }
 
+    // Method --- Removes last node from list
     void pop_back() {
         if (!tail) {
             cout << "List is empty." << endl;
@@ -157,18 +160,19 @@ public:
         Node* temp = tail;
         if (tail->prev) {
             tail = tail->prev;
-            tail->next = nullptr;
+            tail->next = nullptr; // tail's pointer is updated to nullptr
         }
         else
-            head = tail = nullptr;
-        delete temp;
+            head = tail = nullptr; // if list ever becomes empty
+        delete temp; // deletes old tail node aga
     }
 
+    // Destructor -- This will delete all nodes in the list
     ~DoublyLinkedList() {
         while (head) {
             Node* temp = head;
             head = head->next;
-            delete temp;
+            delete temp; // deletes the node one at a time
         }
     }
 
