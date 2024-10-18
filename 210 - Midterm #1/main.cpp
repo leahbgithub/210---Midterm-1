@@ -39,47 +39,54 @@ public:
             head = tail = newNode;
             return;
         }
+        // This will traverse the list which will find the position after which to input a new node
         Node* temp = head;
         for (int i = 0; i < position && temp; ++i)
             temp = temp->next;
+        // This occurs if the position ever exceeds the size of the list
         if (!temp) {
             cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;
+            delete newNode; // Helps avoid leak of memory
             return;
         }
+        // Inserts a new node after a position found
         newNode->next = temp->next;
         newNode->prev = temp;
+        // This will then update the pointers of adjacent nodes
         if (temp->next)
             temp->next->prev = newNode;
         else
-            tail = newNode;
+            tail = newNode; // This updates the tail if the new node ends up being the last node
         temp->next = newNode;
     }
 
+    // Method -- Which will delete last presence of "value" from within the list
     void delete_val(int value) {
-        if (!head) return;
+        if (!head) return; // do not do anything if list ends up being empty
         Node* temp = head;
+        // Find the node that has the value we need to delete
         while (temp && temp->data != value)
             temp = temp->next;
-        if (!temp) return;
+        if (!temp) return; // do not do anything if value not found
         if (temp->prev)
             temp->prev->next = temp->next;
         else
-            head = temp->next;
+            head = temp->next; // Update head if last node ends up being deleted
         if (temp->next)
             temp->next->prev = temp->prev;
         else
-            tail = temp->prev;
-        delete temp;
+            tail = temp->prev; // This will update the tail if last node has been deleted
+        delete temp; // node is deleted
     }
 
+    // Method -- Delete node at position "pos"
     void delete_pos(int pos) {
         if (!head) {
             cout << "List is empty." << endl;
             return;
         }
         if (pos == 1) {
-            pop_front();
+            pop_front(); // if last position is deleted, use po
             return;
         }
         Node* temp = head;
